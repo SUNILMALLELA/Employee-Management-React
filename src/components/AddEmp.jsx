@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { saveEmployeeAPI } from '../services/EmployeeService';
+import { useNavigate } from 'react-router-dom';
 
 const AddEmp = () => {
   const [employee, setEmployee] = useState({
@@ -16,14 +17,23 @@ const AddEmp = () => {
       [name]: value
     });
   };
+  const navigate = useNavigate();
  const saveEmployee = async (e)=>{
  e.preventDefault();
  try {
   const response = await saveEmployeeAPI(employee);
   console.log("Saved",response.data);
+  navigate("/empList")
+
  } catch(error){
   console.log("Error",error);
  }
+ setEmployee({
+   id: "",
+  firstName: "",
+  lastName: "",
+ emailId: ""
+ })
 
 }
   return (
